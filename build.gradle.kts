@@ -35,17 +35,17 @@ compose.desktop {
     application {
         mainClass = "MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
             packageName = "readwrite"
             packageVersion = "1.0.0"
             macOS {
-                iconFile.set(project.file("icons/icon.icns"))
+                iconFile.set(project.file("src/jvmMain/resources/icons/icon.icns"))
             }
             windows {
-                iconFile.set(project.file("icons/icon.ico"))
+                iconFile.set(project.file("src/jvmMain/resources/icons/icon.ico"))
             }
             linux {
-                iconFile.set(project.file("icons/icon.png"))
+                iconFile.set(project.file("src/jvmMain/resources/icons/icon.png"))
             }
         }
     }

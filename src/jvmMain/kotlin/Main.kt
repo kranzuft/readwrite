@@ -1,5 +1,6 @@
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.MenuBar
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -31,12 +32,11 @@ fun main() = application {
 
     val ocr = TesseractOCR()
     val typer = KeyTyper()
-
-
+    val iconRes = painterResource("icons/icon.png")
     val scheduler = Executors.newSingleThreadScheduledExecutor()
 
 
-    Window(onCloseRequest = ::exitApplication, title = "ReadWrite") {
+    Window(onCloseRequest = ::exitApplication, title = "ReadWrite", icon=iconRes) {
         val settings by remember { mutableStateOf(Settings()) }
         val filenames = remember { mutableStateListOf<File>() }
         MainWindow(
