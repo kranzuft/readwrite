@@ -23,5 +23,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release
-          path: /build/compose/binaries/main-release
+          path: build/compose/binaries/main-release
           retention-days: 1
