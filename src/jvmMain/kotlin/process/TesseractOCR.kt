@@ -8,21 +8,41 @@ import java.io.InputStreamReader
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
+import kotlin.io.path.absolutePathString
 
 class TesseractOCR {
     private val fileUtil = FileUtil()
     private val osUtil = OSUtil()
 
     // We need to take the resource Tesseract-OCR.zip and extract it to a folder /data and then unzip it into "tess_ocr" folder
-    fun prepOCR(workingDirectory: String): Boolean {
+    fun prepOCR(workingDirectory: String, customTesseractPath: String): Optional<String> {
+        var customTesseract = customTesseractPath
+        if (customTesseractPath.isBlank()) {
+            customTesseract = workingDirectory + File.separator + "tesseract"
+        }
         // do only for windows
         // check if tesseract is in the system path
         val tesseractPath1 = Paths.get("/usr/local/bin/tesseract")
         val tesseractPath2 = Paths.get("/usr/bin/tesseract")
-        return (Files.exists(tesseractPath1) || Files.exists(tesseractPath2))
+        val customTesseractPath = Paths.get(customTesseract)
+        val tesseractWin = Paths.get(customTesseract, File.separator, "tesseract.exe");
+
+        // First check if the override path exists
+        // Then the unix paths
+        // Then the windows path
+        // Else default to no functionality
+        return if (Files.exists(customTesseractPath)) {
+            Optional.of(customTesseract)
+        } else if (Files.exists(tesseractPath1) || Files.exists(tesseractPath2)) {
+            Optional.of("tesseract")
+        } else if (osUtil.isWindows() && Files.exists(tesseractWin)) {
+            Optional.of(tesseractWin.absolutePathString())
+        } else {
+            Optional.empty()
+        }
     }
 
-    // old method to install for windows
+    // old method to install for windows.
     private fun prepOCRWin(workingDirectory: String): Optional<String> {
         // Get path to unzip ocr library zip to
         val unzipPath = Paths.get(workingDirectory + File.separator + "data")

@@ -1,7 +1,9 @@
+package settings
+
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 
-// Settings to adjust the ui and behaviour of the ocr gui app.
+// settings.Settings to adjust the ui and behaviour of the ocr gui app.
 // Includes:
 // - Toggle save path text field visibility.
 // - Toggle delay number field visibility.
@@ -12,4 +14,7 @@ data class Settings(
     var mainTextFieldVisible: MutableState<Boolean> = mutableStateOf(true),
     var applyStrokesButtonVisible: MutableState<Boolean> = mutableStateOf(true),
     var ocrImagesTextFieldVisible: MutableState<Boolean> = mutableStateOf(false),
+    var customTesseractToolFullPath: MutableState<String> = mutableStateOf(""),
+    var customDefaultTypeDelay: MutableState<Int> = mutableStateOf(5),
+    var rememberVisibilityOptions: MutableState<Boolean> = mutableStateOf(false),
 )
